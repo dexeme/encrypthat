@@ -6,10 +6,10 @@ import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 class BLEDevices extends StatefulWidget {
   const BLEDevices({Key? key}) : super(key: key);
   @override
-  State<BLEDevices> createState() => _DispositivosBLEState();
+  State<BLEDevices> createState() => _BLEDevicesState();
 }
 
-class _DispositivosBLEState extends State<BLEDevices> {
+class _BLEDevicesState extends State<BLEDevices> {
   final FlutterBluePlus flutterBlue = FlutterBluePlus.instance;
 
   void scanResults(List<ScanResult> results) {
