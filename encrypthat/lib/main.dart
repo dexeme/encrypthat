@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:encrypthat/ble_devices.dart';
+import 'package:encrypthat/services/bluetooth/ble_devices.dart';
+import 'package:encrypthat/views/keys_view.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -57,10 +58,11 @@ class _MyHomePageState extends State<MyHomePage> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => BLEDevices()),
+                      MaterialPageRoute(
+                          builder: (context) => KeysView()),
                     );
                   },
-                  child: const Text('Dispositivos BLE'))
+                  child: const Text('Generate RSA Key')),
             ])
           ],
         ),
