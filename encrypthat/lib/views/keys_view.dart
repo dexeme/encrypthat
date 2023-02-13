@@ -1,17 +1,7 @@
-import 'dart:convert';
-import 'dart:math';
-import 'dart:typed_data';
-
+import 'package:encrypthat/services/encryption/key_pair_generator.dart';
 import 'package:flutter/material.dart';
 
-import 'package:encrypthat/services/encryption/generate_new_rsa_key.dart'
-    as rsa;
-
-import 'package:pointycastle/api.dart';
-import 'package:pointycastle/asymmetric/api.dart';
-import 'package:pointycastle/key_generators/api.dart';
-import 'package:pointycastle/key_generators/rsa_key_generator.dart';
-import 'package:pointycastle/random/fortuna_random.dart';
+import '../services/storage_manager.dart';
 
 class KeysView extends StatefulWidget {
   const KeysView({Key? key}) : super(key: key);
@@ -20,75 +10,67 @@ class KeysView extends StatefulWidget {
   State<KeysView> createState() => _KeysViewState();
 }
 
-class _KeysViewState extends State<KeysView> {
-  String publicKey = 'Nenhuma chave gerada ainda';
-  String privateKey = 'Nenhuma chave gerada ainda';
+class _KeysViewState extends State<KeysView>
+    with AutomaticKeepAliveClientMixin {
+  KeyPairGenerator generator = KeyPairGenerator();
+  StorageManager storage = StorageManager.instance;
+  String publicKey = '';
+  String privateKey = '';
 
-  generateRSAkeyPair({required int keyLength}) {
-    final keyGen = RSAKeyGenerator();
+  @override
+  void initState() {
+    super.initState();
+    _initKeys();
+  }
 
-    keyGen.init(ParametersWithRandom(
-        RSAKeyGeneratorParameters(BigInt.parse('65537'), keyLength, 64),
-        exampleSecureRandom()));
-
-    final myPublic = keyGen.generateKeyPair().publicKey as RSAPublicKey;
-    final myPrivate = keyGen.generateKeyPair().privateKey as RSAPrivateKey;
-
-    final keys = keysToStrings(
-        AsymmetricKeyPair<RSAPublicKey, RSAPrivateKey>(myPublic, myPrivate));
+  void _initKeys() async {
+    final readPublicKey =
+        await storage.readFileContents(filename: 'public.pem') == ''
+            ? 'Not defined yet'
+            : await storage.readFileContents(filename: 'public.pem');
+    final readPrivateKey =
+        await storage.readFileContents(filename: 'private.pem') == ''
+            ? 'Not defined yet'
+            : await storage.readFileContents(filename: 'private.pem');
     setState(() {
-      publicKey = keys[0];
-      privateKey = keys[1];
+      publicKey = readPublicKey;
+      privateKey = readPrivateKey;
     });
-
-    return [publicKey, privateKey];
   }
 
-  SecureRandom exampleSecureRandom() {
-    final secureRandom = FortunaRandom();
-    final random = Random.secure();
-    final seeds = <int>[];
-    for (var i = 0; i < 32; i++) {
-      seeds.add(random.nextInt(255));
-    }
-    secureRandom.seed(KeyParameter(Uint8List.fromList(seeds)));
-    return secureRandom;
-  }
+  // TODO: Write a private method for defining the initial public and private keys
+  @override
+  Widget build(BuildContext context) {
+    super.build(context);
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Painel Chave RSA - Keys view'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            TextButton(
+              onPressed: () async {
+                final keys = generator.generateRSAkeyPair(keyLength: 1024);
+                await storage.writeData(filename: 'public.pem', data: keys[0]);
+                await storage.writeData(filename: 'private.pem', data: keys[1]);
 
-  List keysToStrings(AsymmetricKeyPair<RSAPublicKey, RSAPrivateKey> keys) {
-    final publicKeyString =
-        base64Encode(keys.publicKey.modulus!.toRadixString(16).codeUnits);
-    final privateKeyString =
-        base64Encode(keys.privateKey.modulus!.toRadixString(16).codeUnits);
-    return [publicKeyString, privateKeyString];
+                setState(() {
+                  publicKey = keys[0];
+                  privateKey = keys[1];
+                });
+              },
+              child: const Text('Gerar Chave RSA'),
+            ),
+            Text('Chave Pública -> $publicKey'),
+            Text('Chave Privada -> $privateKey'),
+          ],
+        ),
+      ),
+    );
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: const Text('Painel Chave RSA'),
-        ),
-        body: Center(
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-              Container(
-                padding: const EdgeInsets.all(8.0),
-                child:
-                    Text('Public Key: $publicKey \n Private Key: $privateKey'),
-              ),
-              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                TextButton(
-                    onPressed: () {
-                      final keyPair = generateRSAkeyPair(keyLength: 2048);
-                      setState(() {
-                        publicKey = keyPair[0];
-                        privateKey = keyPair[1];
-                      });
-                    },
-                    child: const Text('Gerar = RSA')),
-              ])
-            ])));
-  }
+  bool get wantKeepAlive => true;
 }
