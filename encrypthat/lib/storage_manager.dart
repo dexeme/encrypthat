@@ -26,8 +26,7 @@ class StorageManager {
 
       return contents;
     } catch (e) {
-      // If encountering an error, return 0
-      return 'Error: $e';
+      return 'Not defined yet';
     }
   }
 
