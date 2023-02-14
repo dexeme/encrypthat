@@ -1,8 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:encrypthat/services/bluetooth/ble_devices.dart';
-import 'package:encrypthat/views/keys_view.dart';
+import 'package:encrypthat/routes.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,13 +13,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'Desafio Labsec',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      // insert a new route here
-      home: const MyHomePage(title: 'Desafio Labsec'),
+      routerDelegate: routes.routerDelegate,
+      routeInformationParser: routes.routeInformationParser,
+      routeInformationProvider: routes.routeInformationProvider,
     );
   }
 }
@@ -46,24 +44,13 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               TextButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => BLEDevices()),
-                  );
-                },
+                onPressed: () => context.go('/views/ble_devices_view'),
                 child: const Text('Dispositivos BLE'),
               ),
               TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => KeysView()),
-                    );
-                  },
-                  child: const Text('Generate RSA Key')),
-            ])
+                  onPressed: () => context.go('/views/keys_view'),
+                  child: const Text('Chaves RSA')),
+            ]),
           ],
         ),
       ),
