@@ -1,7 +1,8 @@
 import 'package:encrypthat/services/encryption/key_pair_generator.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
-import '../services/storage_manager.dart';
+import '../storage_manager.dart';
 
 class KeysView extends StatefulWidget {
   const KeysView({Key? key}) : super(key: key);
@@ -38,7 +39,6 @@ class _KeysViewState extends State<KeysView>
     });
   }
 
-  // TODO: Write a private method for defining the initial public and private keys
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -47,25 +47,33 @@ class _KeysViewState extends State<KeysView>
         title: const Text('Painel Chave RSA - Keys view'),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            TextButton(
-              onPressed: () async {
-                final keys = generator.generateRSAkeyPair(keyLength: 1024);
-                await storage.writeData(filename: 'public.pem', data: keys[0]);
-                await storage.writeData(filename: 'private.pem', data: keys[1]);
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              TextButton(
+                onPressed: () async {
+                  final keys = generator.generateRSAkeyPair(keyLength: 1024);
+                  await storage.writeData(
+                      filename: 'public.pem', data: keys[0]);
+                  await storage.writeData(
+                      filename: 'private.pem', data: keys[1]);
 
-                setState(() {
-                  publicKey = keys[0];
-                  privateKey = keys[1];
-                });
-              },
-              child: const Text('Gerar Chave RSA'),
-            ),
-            Text('Chave Pública -> $publicKey'),
-            Text('Chave Privada -> $privateKey'),
-          ],
+                  setState(() {
+                    publicKey = keys[0];
+                    privateKey = keys[1];
+                  });
+                },
+                child: const Text('Gerar Chave RSA'),
+              ),
+              TextButton(
+                  onPressed: () => context.go('/'),
+                  child: const Text('Voltar')),
+              Text('Chave Pública -> $publicKey'),
+              Text('Chave Privada -> $privateKey'),
+            ],
+          ),
         ),
       ),
     );
