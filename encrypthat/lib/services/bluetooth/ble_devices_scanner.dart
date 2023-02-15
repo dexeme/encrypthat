@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:encrypthat/storage_manager.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 
 class BLEDevicesScanner {
@@ -9,21 +10,27 @@ class BLEDevicesScanner {
 
   BLEDevicesScanner();
   FlutterBluePlus flutterBlue = FlutterBluePlus.instance;
+  StorageManager storage = StorageManager.instance;
   String lastScanTime = 'Nenhum Scan Realizado';
-  List devices = [];
+  List<String> devices = [];
 
   String getLastScanTimeFormatted() {
     lastScanTime = DateTime.now().toString();
     return lastScanTime;
   }
 
-  List startScan() {
+  List<String> startScan() {
     flutterBlue.scan(timeout: const Duration(seconds: 5)).listen((scanResult) {
-      devices.add(scanResult.device.name);
+      if (!devices.contains(scanResult.device.toString())) {
+        devices.add(scanResult.device.name);
+      }
       devices = devices.toSet().toList();
       log('Dispositivo Encontrado: ${scanResult.device.name}');
-    }, onDone: () {
+    }, onDone: () async {
       log('Scan Finalizado');
+      log(devices.toString());
+      await storage.writeData(
+          filename: 'devices.txt', data: devices.toString());
     }, onError: (error) {
       log('Erro no Scan $error');
     });
