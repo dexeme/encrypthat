@@ -2,6 +2,7 @@ import 'package:encrypthat/services/encryption/key_pair_generator.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../services/encryption/widgets/key_length_dropdown.dart';
 import '../storage_manager.dart';
 
 class KeysView extends StatefulWidget {
@@ -13,8 +14,9 @@ class KeysView extends StatefulWidget {
 
 class _KeysViewState extends State<KeysView>
     with AutomaticKeepAliveClientMixin {
-  KeyPairGenerator generator = KeyPairGenerator();
+  KeyPairGenerator generator = KeyPairGenerator.instance;
   StorageManager storage = StorageManager.instance;
+  int keyLength = 64;
   String publicKey = '';
   String privateKey = '';
 
@@ -52,17 +54,28 @@ class _KeysViewState extends State<KeysView>
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
+              KeyLengthDropdown(
+                onValueChanged: (value) {
+                  setState(() {
+                    keyLength = value;
+                  });
+                },
+              ),
               TextButton(
                 onPressed: () async {
-                  final keys = generator.generateRSAkeyPair(keyLength: 1024);
-                  await storage.writeData(
-                      filename: 'public.pem', data: keys[0]);
-                  await storage.writeData(
-                      filename: 'private.pem', data: keys[1]);
+                  final keys =
+                      generator.generateRSAkeyPair(keyLength: keyLength);
+
+                  final publicKey = keys.publicKey;
+                  final privateKey = keys.privateKey;
+
+                  final lista = generator.keysToStrings(publicKey, privateKey);
 
                   setState(() {
-                    publicKey = keys[0];
-                    privateKey = keys[1];
+                    print(lista[0]);
+                    print(lista[1]);
+                    this.publicKey = lista[0];
+                    this.privateKey = lista[1];
                   });
                 },
                 child: const Text('Gerar Chave RSA'),
