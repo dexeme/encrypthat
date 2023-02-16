@@ -8,21 +8,33 @@ import 'package:pointycastle/key_generators/rsa_key_generator.dart';
 import 'package:pointycastle/random/fortuna_random.dart';
 
 class KeyPairGenerator {
-  KeyPairGenerator();
+  KeyPairGenerator._privateConstructor();
+  static final KeyPairGenerator _instance =
+      KeyPairGenerator._privateConstructor();
+  static KeyPairGenerator get instance => _instance;
 
-  List<String> generateRSAkeyPair({required int keyLength}) {
+  RSAPrivateKey? _privateKey;
+  RSAPublicKey? _publicKey;
+
+  RSAPrivateKey? get privateKey => _privateKey;
+  RSAPublicKey? get publicKey => _publicKey;
+
+  AsymmetricKeyPair<RSAPublicKey, RSAPrivateKey> generateRSAkeyPair(
+      {required int keyLength}) {
     final keyGen = RSAKeyGenerator();
 
     keyGen.init(ParametersWithRandom(
         RSAKeyGeneratorParameters(BigInt.parse('65537'), keyLength, 64),
         exampleSecureRandom()));
 
-    var publicKey = keyGen.generateKeyPair().publicKey as RSAPublicKey;
-    var privateKey = keyGen.generateKeyPair().privateKey as RSAPrivateKey;
+    final publicKey = keyGen.generateKeyPair().publicKey as RSAPublicKey;
+    final privateKey = keyGen.generateKeyPair().privateKey as RSAPrivateKey;
 
-    final keysAsString = _keysToStrings(publicKey, privateKey);
+    _privateKey = privateKey;
+    _publicKey = publicKey;
 
-    return keysAsString;
+    return AsymmetricKeyPair<RSAPublicKey, RSAPrivateKey>(
+        publicKey, privateKey);
   }
 
   SecureRandom exampleSecureRandom() {
@@ -36,7 +48,7 @@ class KeyPairGenerator {
     return secureRandom;
   }
 
-  List<String> _keysToStrings(publicKey, privateKey) {
+  List<String> keysToStrings(publicKey, privateKey) {
     final publicKeyString =
         base64Encode(publicKey.modulus!.toRadixString(16).codeUnits);
     final privateKeyString =
