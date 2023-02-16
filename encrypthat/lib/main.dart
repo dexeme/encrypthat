@@ -50,6 +50,12 @@ class _MyHomePageState extends State<MyHomePage> {
               TextButton(
                   onPressed: () => context.go('/views/keys_view'),
                   child: const Text('Chaves RSA')),
+              TextButton(
+                  onPressed: () => context.go('/views/signature_generator_view'),
+                  child: const Text('Assinar Lista')),
+              TextButton(
+                  onPressed: () => context.go('/views/signature_validator_view'),
+                  child: const Text('Validar Assinatura')),
             ]),
           ],
         ),
