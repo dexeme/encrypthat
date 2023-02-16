@@ -3,6 +3,8 @@ import 'package:encrypthat/views/ble_devices_view.dart';
 import 'package:go_router/go_router.dart';
 
 import 'views/keys_view.dart';
+import 'views/signature_view.dart';
+import 'views/signature_validator_view.dart';
 
 final routes = GoRouter(routes: [
   GoRoute(
@@ -19,4 +21,12 @@ final routes = GoRouter(routes: [
     path: '/views/ble_devices_view',
     builder: (context, state) => const BLEDevicesView(),
   ),
+  GoRoute(
+    path: '/views/signature_generator_view',
+    builder: (context, state) => const SignatureGeneratorView(),
+  ),
+  GoRoute(
+    path: '/views/signature_validator_view',
+    builder: (context, state) => const SignatureValidatorView(),
+  )
 ]);
