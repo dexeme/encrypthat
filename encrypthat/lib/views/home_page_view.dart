@@ -29,67 +29,58 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  get devicesList => _devicesList;
+
   String lastScanTime = 'Nenhum Scan Realizado';
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: constants.backgroundColor,
-      appBar: AppBar(
-        title: const Text('ENCRYPTHAT', style: constants.boldFont),
-        leading: const Icon(CustomIcons.logo),
-        backgroundColor: constants.appBarColor,
-      ),
-      bottomNavigationBar: const BottomNavBar(),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                SizedBox(
-                  height: 70,
-                ),
-                Text('DISPOSITIVOS BLE', style: constants.boldFont),
-              ],
-            ),
-            Expanded(
-              child: ScanResultPanel(
-                devicesList: _devicesList.toSet().toList(), // Avoid duplicates
-                lastScanTime: _lastScanTime,
+    return Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: const [
+              SizedBox(
+                height: 70,
               ),
+              Text('DISPOSITIVOS BLE', style: constants.boldFont),
+            ],
+          ),
+          Expanded(
+            child: ScanResultPanel(
+              devicesList: _devicesList.toSet().toList(), // Avoid duplicates
+              lastScanTime: _lastScanTime,
             ),
-            const SizedBox(
-              height: 70,
-            ),
-            Column(
-              children: [
-                Text(
-                    'Última verificação: ${lastScan()}', 
-                    style: constants.regularFont,
-                    textAlign: TextAlign.center),
-                const SizedBox(
-                  height: 50,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    StartScanButton(onPressed: () {
-                      devices.clear();
-                      final devicesReturn = scanner.startScan();
-                      final lastScanTime = DateTime.now();
-                      setState(() {
-                        _lastScanTime = lastScanTime;
-                        _devicesList = devicesReturn;
-                      });
-                    }),
-                  ],
-                ),
-              ],
-            ),
-          ],
-        ),
+          ),
+          const SizedBox(
+            height: 70,
+          ),
+          Column(
+            children: [
+              Text('Última verificação: ${lastScan()}',
+                  style: constants.regularFont, textAlign: TextAlign.center),
+              const SizedBox(
+                height: 50,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  StartScanButton(onPressed: () {
+                    devices.clear();
+                    final devicesReturn = scanner.startScan();
+                    final lastScanTime = DateTime.now();
+                    setState(() {
+                      _lastScanTime = lastScanTime;
+                      _devicesList = devicesReturn;
+                    });
+                  }),
+                ],
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
