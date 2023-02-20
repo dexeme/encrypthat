@@ -26,10 +26,8 @@ class _GenerateKeysButtonState extends State<GenerateKeysButton> {
   void initState() {
     super.initState();
     if (keys.privateKey == null || keys.publicKey == null) {
-      print('chaves nulas');
       _isButtonAvailable = true;
     } else {
-      print('chaves nulas');
       _isButtonAvailable = false;
     }
   }
@@ -43,7 +41,7 @@ class _GenerateKeysButtonState extends State<GenerateKeysButton> {
               setState(() {
                 _isButtonEnabled = false;
               });
-              Future.delayed(const Duration(seconds: 2), () {
+              Future.delayed(const Duration(seconds: 5), () {
                 setState(() {
                   _isButtonEnabled = true;
                 });
