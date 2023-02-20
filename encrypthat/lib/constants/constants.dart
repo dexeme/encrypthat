@@ -10,12 +10,40 @@ const selectedItemColor = Color.fromRGBO(255, 255, 255, 1);
 const unselectedItemColor = Color.fromRGBO(255, 255, 255, 0.5);
 const buttonColor = Color.fromRGBO(0, 0, 0, 0.9);
 const buttonColorPressed = Color.fromRGBO(0, 0, 0, 0.7);
+const buttonColorDisabled = Color.fromRGBO(0, 0, 0, 0.5);
+const warningColor = Color.fromRGBO(158, 37, 37, 1);
+const okColor = Color.fromRGBO(71, 147, 31, 1);
+const emptyListColor = Color.fromRGBO(0, 0, 0, 0.5);
 
 const startScanButtonStyle = TextStyle(
     fontFamily: 'JetBrainsMono',
     fontSize: 20,
     fontWeight: FontWeight.bold,
     color: Colors.white);
+
+const warningStyle = TextStyle(
+    fontFamily: 'JetBrainsMono',
+    fontSize: 18,
+    fontWeight: FontWeight.bold,
+    color: warningColor);
+
+const emptyListStyle = TextStyle(
+    fontFamily: 'JetBrainsMono',
+    fontSize: 15,
+    fontWeight: FontWeight.bold,
+    color: warningColor);
+
+const okStyle = TextStyle(
+    fontFamily: 'JetBrainsMono',
+    fontSize: 18,
+    fontWeight: FontWeight.bold,
+    color: okColor);
+
+const buttonBlockedStyle = TextStyle(
+    fontFamily: 'JetBrainsMono',
+    fontSize: 20,
+    fontWeight: FontWeight.bold,
+    color: buttonColorDisabled);
 
 const keysInfoStyle = TextStyle(
     fontFamily: 'JetBrainsMono',
@@ -27,7 +55,6 @@ const keysNameStyle = TextStyle(
     fontFamily: 'JetBrainsMono',
     fontSize: 15,
     fontWeight: FontWeight.bold,
-    
     color: Color.fromRGBO(0, 0, 0, 0.5));
 
 const panelShadow = BoxShadow(
