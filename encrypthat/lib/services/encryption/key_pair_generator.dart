@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:math';
 import 'dart:typed_data';
 import 'package:pointycastle/api.dart';
@@ -13,46 +12,41 @@ class KeyPairGenerator {
       KeyPairGenerator._privateConstructor();
   static KeyPairGenerator get instance => _instance;
 
-  RSAPrivateKey? _privateKey;
-  RSAPublicKey? _publicKey;
-
-  RSAPrivateKey? get privateKey => _privateKey;
-  RSAPublicKey? get publicKey => _publicKey;
+  AsymmetricKeyPair<RSAPublicKey, RSAPrivateKey>? _keyPair;
+  AsymmetricKeyPair<RSAPublicKey, RSAPrivateKey>? get keyPair => _keyPair;
+  RSAPublicKey? get publicKey => _keyPair?.publicKey;
+  RSAPrivateKey? get privateKey => _keyPair?.privateKey;
 
   AsymmetricKeyPair<RSAPublicKey, RSAPrivateKey> generateRSAkeyPair(
       {required int keyLength}) {
     final keyGen = RSAKeyGenerator();
 
-    keyGen.init(ParametersWithRandom(
-        RSAKeyGeneratorParameters(BigInt.parse('65537'), keyLength, 64),
-        exampleSecureRandom()));
-
-    final publicKey = keyGen.generateKeyPair().publicKey as RSAPublicKey;
-    final privateKey = keyGen.generateKeyPair().privateKey as RSAPrivateKey;
-
-    _privateKey = privateKey;
-    _publicKey = publicKey;
-
-    return AsymmetricKeyPair<RSAPublicKey, RSAPrivateKey>(
-        publicKey, privateKey);
+    keyGen.init(
+      ParametersWithRandom(
+          RSAKeyGeneratorParameters(
+            BigInt.parse('65537'),
+            keyLength,
+            5,
+          ),
+          exampleSecureRandom()),
+    );
+    final keyPair = keyGen.generateKeyPair();
+    final publicKey = keyPair.publicKey as RSAPublicKey;
+    final privateKey = keyPair.privateKey as RSAPrivateKey;
+    final keyPairRSA =
+        AsymmetricKeyPair<RSAPublicKey, RSAPrivateKey>(publicKey, privateKey);
+    _keyPair = keyPairRSA;
+    return keyPairRSA;
   }
 
   SecureRandom exampleSecureRandom() {
-    final secureRandom = FortunaRandom();
-    final random = Random.secure();
-    final seeds = <int>[];
+    var secureRandom = FortunaRandom();
+    var random = Random.secure();
+    List<int> seeds = <int>[];
     for (var i = 0; i < 32; i++) {
       seeds.add(random.nextInt(255));
     }
     secureRandom.seed(KeyParameter(Uint8List.fromList(seeds)));
     return secureRandom;
-  }
-
-  List<String> keysToStrings(publicKey, privateKey) {
-    final publicKeyString =
-        base64Encode(publicKey.modulus!.toRadixString(16).codeUnits);
-    final privateKeyString =
-        base64Encode(privateKey.modulus!.toRadixString(16).codeUnits);
-    return [publicKeyString, privateKeyString];
   }
 }
