@@ -13,13 +13,13 @@ class KeyLengthDropdown extends StatefulWidget {
 }
 
 class _KeyLengthDropdownState extends State<KeyLengthDropdown> {
-  int _value = 256;
+  int _value = 512;
 
   @override
   Widget build(BuildContext context) {
     return DropdownButton<int>(
       value: _value,
-      items: <int>[64, 128, 256, 512]
+      items: <int>[512, 1024, 2048, 4096]
           .map<DropdownMenuItem<int>>(
             (int value) => DropdownMenuItem<int>(
               value: value,
