@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:encrypthat/constants/constants.dart' as constants;
-import 'package:go_router/go_router.dart';
 
 import '../icons.dart';
 
 class BottomNavBar extends StatefulWidget {
-  const BottomNavBar({super.key});
+  const BottomNavBar({super.key, required this.onPressed});
+  final Function onPressed;
 
   @override
   State<BottomNavBar> createState() => _BottomNavBarState();
@@ -15,15 +15,10 @@ class _BottomNavBarState extends State<BottomNavBar> {
   int _currentIndex = 0;
 
   void _onItemTapped(int index) {
+    widget.onPressed(index);
+
     setState(() {
       _currentIndex = index;
-      if (index == 0) {
-        context.go('/');
-      } else if (index == 1) {
-        context.go('/views/keys_page_view');
-      } else if (index == 2) {
-        context.go('/views/keys_page_view');
-      }
     });
   }
 
