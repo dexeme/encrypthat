@@ -29,7 +29,7 @@ class SignatureGenerator {
   get getSignature => signature;
   get getKeyPair => keyPair;
 
-  Uint8List rsaSign(Uint8List dataToSign) {
+  Uint8List sign(Uint8List dataToSign) {
     final signer = RSASigner(SHA256Digest(), '0609608648016503040201');
 
     final privateKey = keyPairGenerator.privateKey;

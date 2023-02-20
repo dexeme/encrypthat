@@ -26,10 +26,12 @@ class SignatureVerifier {
   Uint8List? dataToSign;
   RSAPublicKey? publicKey;
   Uint8List? signature;
+  bool? isValid;
 
   get getPublicKey => publicKey;
   get getDataToSign => dataToSign;
   get getSignature => signature;
+  get getIsValid => isValid;
 
   void initVariables() {
     _initSignature();
@@ -58,7 +60,7 @@ class SignatureVerifier {
     }
   }
 
-  bool rsaVerify(Uint8List dataToSign) {
+  bool verify(Uint8List dataToSign) {
     // Public key, data to sign, signature
     final sign = signatureGenerator.getSignature;
     final sig = RSASignature(sign);
@@ -75,6 +77,7 @@ class SignatureVerifier {
     try {
       final isValid = verifier.verifySignature(dataToSign, sig);
       print('Signature is valid: $isValid');
+      this.isValid = isValid;
       return isValid;
     } catch (e) {
       print('Error: $e');
