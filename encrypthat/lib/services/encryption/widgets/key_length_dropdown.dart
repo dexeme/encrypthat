@@ -13,7 +13,7 @@ class KeyLengthDropdown extends StatefulWidget {
 }
 
 class _KeyLengthDropdownState extends State<KeyLengthDropdown> {
-  int _value = 64;
+  int _value = 256;
 
   @override
   Widget build(BuildContext context) {
