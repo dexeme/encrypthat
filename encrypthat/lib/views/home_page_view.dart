@@ -4,9 +4,6 @@ import 'package:encrypthat/storage_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:encrypthat/constants/constants.dart' as constants;
 import 'package:encrypthat/services/bluetooth/widgets/start_scan_button.dart';
-import '../icons.dart';
-
-import '../widgets/bottom_nav_bar.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -19,19 +16,16 @@ class _HomePageState extends State<HomePage> {
   BLEDevicesScanner scanner = BLEDevicesScanner.instance;
   StorageManager storage = StorageManager.instance;
   List<String> _devicesList = [];
-  List devices = [];
-  DateTime? _lastScanTime;
-  String lastScan() {
-    if (_lastScanTime == null) {
-      return 'Nenhum Scan Realizado';
-    } else {
-      return '${_lastScanTime!.day}/${_lastScanTime!.month}/${_lastScanTime!.year} ${_lastScanTime!.hour}:${_lastScanTime!.minute}';
-    }
+  String? _lastScanTime;
+
+  @override
+  void initState() {
+    super.initState();
+    _devicesList = scanner.devices;
+    _lastScanTime = scanner.lastScanTime;
   }
 
   get devicesList => _devicesList;
-
-  String lastScanTime = 'Nenhum Scan Realizado';
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +53,7 @@ class _HomePageState extends State<HomePage> {
           ),
           Column(
             children: [
-              Text('Última verificação: ${lastScan()}',
+              Text('Última verificação: $_lastScanTime',
                   style: constants.regularFont, textAlign: TextAlign.center),
               const SizedBox(
                 height: 50,
@@ -68,9 +62,8 @@ class _HomePageState extends State<HomePage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   StartScanButton(onPressed: () {
-                    devices.clear();
                     final devicesReturn = scanner.startScan();
-                    final lastScanTime = DateTime.now();
+                    final lastScanTime = scanner.lastScanTime;
                     setState(() {
                       _lastScanTime = lastScanTime;
                       _devicesList = devicesReturn;

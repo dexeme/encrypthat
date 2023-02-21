@@ -16,7 +16,6 @@ class StartScanButton extends StatefulWidget {
 
 class _StartScanButtonState extends State<StartScanButton> {
   bool _isButtonEnabled = true;
-  
 
   @override
   Widget build(BuildContext context) {
@@ -24,28 +23,20 @@ class _StartScanButtonState extends State<StartScanButton> {
       onTap: _isButtonEnabled
           ? () {
               widget.onPressed();
-              setState(() {
-                _isButtonEnabled = false;
-              });
-              Future.delayed(const Duration(seconds: 5), () {
-                setState(() {
-                  _isButtonEnabled = true;
-                });
-              });
             }
           : null,
       child: Container(
         width: 300,
         height: 50,
         alignment: Alignment.center,
-        decoration: BoxDecoration(          
+        decoration: BoxDecoration(
           color: _isButtonEnabled
               ? constants.buttonColor
               : constants.buttonColorPressed,
           borderRadius: BorderRadius.circular(30),
         ),
         child: _isButtonEnabled
-            ? const Text('PROCURAR DISPOSIVOS',
+            ? const Text('PROCURAR DISPOSITIVOS',
                 style: constants.startScanButtonStyle)
             : const Text('PROCURANDO...',
                 style: constants.startScanButtonStyle),

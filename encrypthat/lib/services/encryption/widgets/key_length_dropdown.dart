@@ -23,7 +23,7 @@ class _KeyLengthDropdownState extends State<KeyLengthDropdown> {
           .map<DropdownMenuItem<int>>(
             (int value) => DropdownMenuItem<int>(
               value: value,
-              child: Text('$value bits'),
+              child: Text('Key size: $value bits'),
             ),
           )
           .toList(),

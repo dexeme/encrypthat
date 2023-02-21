@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:encrypthat/storage_manager.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 
@@ -8,33 +7,30 @@ class BLEDevicesScanner {
       BLEDevicesScanner._privateConstructor();
   static BLEDevicesScanner get instance => _instance;
 
+  String? get lastScanTime => _lastScanTime;
+  List<String> get devices => _devices;
+
   BLEDevicesScanner();
   FlutterBluePlus flutterBlue = FlutterBluePlus.instance;
   StorageManager storage = StorageManager.instance;
-  String lastScanTime = 'Nenhum Scan Realizado';
-  List<String> devices = [];
-
-  String getLastScanTimeFormatted() {
-    lastScanTime = DateTime.now().toString();
-    return lastScanTime;
-  }
+  String? _lastScanTime;
+  List<String> _devices = [];
 
   List<String> startScan() {
     flutterBlue.scan(timeout: const Duration(seconds: 5)).listen((scanResult) {
       if (!devices.contains(scanResult.device.toString())) {
         devices.add(scanResult.device.name);
       }
-      devices = devices.toSet().toList();
-      log('Dispositivo Encontrado: ${scanResult.device.name}');
     }, onDone: () async {
-      log('Scan Finalizado');
-      log(devices.toString());
       await storage.writeData(
           filename: 'devices.txt', data: devices.toString());
-    }, onError: (error) {
-      log('Erro no Scan $error');
-    });
-    log('Dispositivos Encontrados: $devices');
+    }, onError: (error) {});
+
+    final time = DateTime.now();
+    _devices = devices.toSet().toList();
+    devices.toSet().toList();
+    _lastScanTime =
+        '${time.day}/${time.month}/${time.year} ${time.hour}:${time.minute}';
     return devices;
   }
 

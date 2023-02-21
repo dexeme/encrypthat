@@ -27,7 +27,9 @@ class SignatureVerifier {
   RSAPublicKey? publicKey;
   Uint8List? signature;
   bool? isValid;
+  bool? isVerifying;
 
+  get getIsVerifying => isVerifying;
   get getPublicKey => publicKey;
   get getDataToSign => dataToSign;
   get getSignature => signature;
@@ -61,6 +63,7 @@ class SignatureVerifier {
   }
 
   bool verify(Uint8List dataToSign) {
+    isVerifying = true;
     // Public key, data to sign, signature
     final sign = signatureGenerator.getSignature;
     final sig = RSASignature(sign);
@@ -78,6 +81,7 @@ class SignatureVerifier {
       final isValid = verifier.verifySignature(dataToSign, sig);
       print('Signature is valid: $isValid');
       this.isValid = isValid;
+      isVerifying = false;
       return isValid;
     } catch (e) {
       print('Error: $e');

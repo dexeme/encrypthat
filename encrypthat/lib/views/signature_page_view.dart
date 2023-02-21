@@ -105,6 +105,7 @@ class _SignaturePageState extends State<SignaturePage> {
               children: [
                 VerifySignatureButton(
                   onPressed: () {
+                    
                     if (signature == null) {
                       setState(() {
                         isSignatureNull = true;

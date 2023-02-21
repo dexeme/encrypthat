@@ -15,7 +15,7 @@ class KeysPage extends StatefulWidget {
 
 class _KeysPageState extends State<KeysPage> {
   KeyPairGenerator keyPairGenerator = KeyPairGenerator.instance;
-  int keyLength = 64;
+  int keyLength = 512;
   pc.RSAPublicKey? _publicKey;
   pc.RSAPrivateKey? _privateKey;
 
@@ -25,8 +25,6 @@ class _KeysPageState extends State<KeysPage> {
     _publicKey = keyPairGenerator.publicKey;
     _privateKey = keyPairGenerator.privateKey;
   }
-
-  String lastScanTime = 'Nenhum Scan Realizado';
 
   @override
   Widget build(BuildContext context) {

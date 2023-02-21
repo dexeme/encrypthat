@@ -45,14 +45,6 @@ class _SignListButtonState extends State<SignListButton> {
       onTap: _isButtonAvailable!
           ? () {
               widget.onPressed();
-              setState(() {
-                _isButtonEnabled = false;
-              });
-              Future.delayed(const Duration(seconds: 2), () {
-                setState(() {
-                  _isButtonEnabled = true;
-                });
-              });
             }
           : null,
       child: Container(

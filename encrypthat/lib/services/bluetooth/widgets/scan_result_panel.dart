@@ -3,7 +3,7 @@ import 'package:encrypthat/constants/constants.dart' as constants;
 
 class ScanResultPanel extends StatelessWidget {
   final List<String> devicesList;
-  final DateTime? lastScanTime;
+  final String? lastScanTime;
 
   const ScanResultPanel({
     Key? key,
@@ -23,6 +23,23 @@ class ScanResultPanel extends StatelessWidget {
       margin: const EdgeInsets.only(top: 20),
       child: Column(
         children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const SizedBox(
+                height: 50,
+              ),
+              devicesList.isEmpty
+                  ? const Text(
+                      'NENHUM DISPOSITIVO ENCONTRADO',
+                      style: constants.boldFont,
+                    )
+                  : const Text(
+                      'DISPOSITIVOS ENCONTRADOS',
+                      style: constants.boldFont,
+                    ),
+            ],
+          ),
           Expanded(
             child: ListView.builder(
               itemCount: devicesList.length,

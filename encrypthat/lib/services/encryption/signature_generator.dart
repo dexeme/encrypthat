@@ -20,11 +20,13 @@ class SignatureGenerator {
 // private key, data to sign, public key, signature
   Uint8List? dataToSign;
   Uint8List? signature;
+  bool? isGenerating;
 
   AsymmetricKeyPair<RSAPublicKey, RSAPrivateKey>? keyPair;
 
   void initVariables() {}
 
+  get getIsGenerating => isGenerating;
   get getDataToSign => dataToSign;
   get getSignature => signature;
   get getKeyPair => keyPair;

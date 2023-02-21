@@ -3,6 +3,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:encrypthat/services/bluetooth/ble_devices_scanner.dart';
 import 'package:flutter/material.dart';
 import 'package:encrypthat/constants/constants.dart' as constants;
 import 'package:flutter/services.dart';
@@ -20,7 +21,7 @@ class SignatureInfoPanel extends StatelessWidget {
   final emptyData = Uint8List.fromList([91, 93]); // '[]' -> Empty Device List
   final keyGenerator = KeyPairGenerator.instance;
   final signatureGenerator = SignatureGenerator.instance;
-  final storage = StorageManager.instance;
+  final scanner = BLEDevicesScanner.instance;
   final signatureVerifier = SignatureVerifier.instance;
 
   SignatureInfoPanel({
@@ -41,40 +42,6 @@ class SignatureInfoPanel extends StatelessWidget {
       margin: const EdgeInsets.only(top: 20),
       child: Column(children: [
         Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-          keyGenerator.publicKey == null
-              ? Row(
-                  children: const [
-                    Text('Par de chaves ', style: constants.warningStyle),
-                    Icon(Icons.warning,
-                        color: constants.warningColor, size: 18),
-                  ],
-                )
-              : Row(
-                  children: const [
-                    Text('Par de chaves ', style: constants.okStyle),
-                    Icon(Icons.check_circle,
-                        color: constants.okColor, size: 18),
-                  ],
-                ),
-        ]),
-        Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-          signatureGenerator.signature == null
-              ? Row(
-                  children: const [
-                    Text('Assinatura ', style: constants.warningStyle),
-                    Icon(Icons.warning,
-                        color: constants.warningColor, size: 18),
-                  ],
-                )
-              : Row(
-                  children: const [
-                    Text('Assinatura ', style: constants.okStyle),
-                    Icon(Icons.check_circle,
-                        color: constants.okColor, size: 18),
-                  ],
-                ),
-        ]),
-        Row(mainAxisAlignment: MainAxisAlignment.center, children: [
           dataToSign.toString() == emptyData.toString()
               ? Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -92,19 +59,54 @@ class SignatureInfoPanel extends StatelessWidget {
                   ],
                 ),
         ]),
+        Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+          keyGenerator.publicKey == null
+              ? Row(
+                  children: const [
+                    Text('Par de chaves ', style: constants.nullSignatureStyle),
+                    Icon(Icons.warning,
+                        color: constants.nullSignatureColor, size: 18),
+                  ],
+                )
+              : Row(
+                  children: const [
+                    Text('Par de chaves ', style: constants.okStyle),
+                    Icon(Icons.check_circle,
+                        color: constants.okColor, size: 18),
+                  ],
+                ),
+        ]),
+        Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+          signatureGenerator.signature == null
+              ? Row(
+                  children: const [
+                    Text('Assinatura ', style: constants.nullSignatureStyle),
+                    Icon(Icons.warning,
+                        color: constants.nullSignatureColor, size: 18),
+                  ],
+                )
+              : Row(
+                  children: const [
+                    Text('Assinatura ', style: constants.okStyle),
+                    Icon(Icons.check_circle,
+                        color: constants.okColor, size: 18),
+                  ],
+                ),
+        ]),
         const SizedBox(height: 20),
         Row(mainAxisAlignment: MainAxisAlignment.center, children: [
           dataToSign.toString() == emptyData.toString()
-              ? const Text('Sua lista de dispositivos:',
+              ? const Text('Sua lista de dispositivos está vazia!',
                   style: constants.keysInfoStyle)
               : const Text('Sua lista de dispositivos:',
                   style: constants.keysInfoStyle),
         ]),
         Container(
           margin: const EdgeInsets.only(top: 10),
-          child: dataToSign.toString() == emptyData.toString()
+          child: dataToSign == null
               ? const Text('[]', style: constants.keysInfoStyle)
-              : Text(dataToSign.toString(), style: constants.keysInfoStyle),
+              : Text(scanner.devices.toSet().toList().toString(),
+                  style: constants.keysInfoStyle),
         ),
         Expanded(
           child: Row(
@@ -114,7 +116,7 @@ class SignatureInfoPanel extends StatelessWidget {
                   ? const Text('Você ainda não assinou nada!',
                       style: constants.keysInfoStyle)
                   : Flexible(
-                      child: Text('Sua assinatura: ${signature!}',
+                      child: Text('Sua assinatura: ${base64Encode(signature!)}',
                           style: constants.keysInfoStyle),
                     ),
             ],

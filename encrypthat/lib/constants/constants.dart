@@ -13,6 +13,7 @@ const buttonColorPressed = Color.fromRGBO(0, 0, 0, 0.7);
 const buttonColorDisabled = Color.fromRGBO(0, 0, 0, 0.5);
 const warningColor = Color.fromRGBO(158, 37, 37, 1);
 const okColor = Color.fromRGBO(71, 147, 31, 1);
+const nullSignatureColor = Color.fromRGBO(255, 149, 0, 0.946);
 const emptyListColor = Color.fromRGBO(0, 0, 0, 0.5);
 
 const startScanButtonStyle = TextStyle(
@@ -26,6 +27,12 @@ const warningStyle = TextStyle(
     fontSize: 18,
     fontWeight: FontWeight.bold,
     color: warningColor);
+
+const nullSignatureStyle = TextStyle(
+    fontFamily: 'JetBrainsMono',
+    fontSize: 18,
+    fontWeight: FontWeight.bold,
+    color: nullSignatureColor);
 
 const emptyListStyle = TextStyle(
     fontFamily: 'JetBrainsMono',
