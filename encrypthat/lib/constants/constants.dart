@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:encrypthat/icons.dart';
+import 'package:encrypthat/utils/icons.dart';
 
 const appBarColor = Color.fromRGBO(52, 52, 52, 1);
 const bottomNavBarColor = Color.fromRGBO(32, 32, 32, 1);
@@ -24,13 +24,13 @@ const startScanButtonStyle = TextStyle(
 
 const warningStyle = TextStyle(
     fontFamily: 'JetBrainsMono',
-    fontSize: 18,
+    fontSize: 15,
     fontWeight: FontWeight.bold,
     color: warningColor);
 
 const nullSignatureStyle = TextStyle(
     fontFamily: 'JetBrainsMono',
-    fontSize: 18,
+    fontSize: 15,
     fontWeight: FontWeight.bold,
     color: nullSignatureColor);
 
@@ -42,9 +42,15 @@ const emptyListStyle = TextStyle(
 
 const okStyle = TextStyle(
     fontFamily: 'JetBrainsMono',
-    fontSize: 18,
+    fontSize: 15,
     fontWeight: FontWeight.bold,
     color: okColor);
+
+const invalidStyle = TextStyle(
+    fontFamily: 'JetBrainsMono',
+    fontSize: 15,
+    fontWeight: FontWeight.bold,
+    color: warningColor);
 
 const buttonBlockedStyle = TextStyle(
     fontFamily: 'JetBrainsMono',
@@ -62,7 +68,13 @@ const keysNameStyle = TextStyle(
     fontFamily: 'JetBrainsMono',
     fontSize: 15,
     fontWeight: FontWeight.bold,
-    color: Color.fromRGBO(0, 0, 0, 0.5));
+    color: Color.fromRGBO(0, 0, 0, 1));
+
+const keysValueStyle = TextStyle(
+    fontFamily: 'JetBrainsMono',
+    fontSize: 10,
+    fontWeight: FontWeight.normal,
+    color: Colors.black);
 
 const panelShadow = BoxShadow(
   color: Colors.black26,
@@ -70,6 +82,12 @@ const panelShadow = BoxShadow(
   spreadRadius: 1,
   offset: Offset(0, 1),
 );
+
+const signatureStyle = TextStyle(
+    fontFamily: 'JetBrainsMono',
+    fontSize: 15,
+    fontWeight: FontWeight.w800,
+    color: Colors.black);
 
 const bluetoothIcon = CustomIcons.bluetooth;
 
