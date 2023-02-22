@@ -1,18 +1,16 @@
 import 'dart:convert';
 import 'dart:typed_data';
-import 'package:pointycastle/api.dart' as pc;
-import 'package:encrypthat/services/encryption/key_pair_generator.dart';
+import 'package:encrypthat/services/encryption/widgets/buttons/sign_list_button.dart';
+import 'package:encrypthat/services/encryption/widgets/buttons/verify_signature_button.dart';
+import 'package:encrypthat/services/encryption/widgets/functions/key_pair_generator.dart';
+import 'package:encrypthat/services/encryption/widgets/functions/signature_generator.dart';
+import 'package:encrypthat/services/encryption/widgets/functions/signature_verifier.dart';
+import 'package:encrypthat/services/encryption/widgets/panels/signature_info_panel.dart';
+import 'package:encrypthat/utils/storage_manager.dart';
 import 'package:pointycastle/asymmetric/api.dart';
 import 'package:flutter/material.dart';
 import 'package:encrypthat/constants/constants.dart' as constants;
-import '../icons.dart';
-import '../services/encryption/signature_generator.dart';
-import '../services/encryption/signature_verifier.dart';
-import '../services/encryption/widgets/sign_list_button.dart';
-import '../services/encryption/widgets/signature_info_panel.dart';
-import '../services/encryption/widgets/verify_signature_button.dart';
-import '../storage_manager.dart';
-import '../widgets/bottom_nav_bar.dart';
+
 
 class SignaturePage extends StatefulWidget {
   const SignaturePage({super.key});
@@ -23,8 +21,7 @@ class SignaturePage extends StatefulWidget {
 
 Uint8List? signature;
 Uint8List? dataToSign;
-bool isVerified = false;
-bool isSignatureNull = false;
+bool? isValid;
 
 class _SignaturePageState extends State<SignaturePage> {
   final storage = StorageManager.instance;
@@ -34,6 +31,7 @@ class _SignaturePageState extends State<SignaturePage> {
 
   RSAPublicKey? _publicKey;
   RSAPrivateKey? _privateKey;
+  bool isSignatureNull = false;
 
   @override
   void initState() {
@@ -69,6 +67,7 @@ class _SignaturePageState extends State<SignaturePage> {
           child: SignatureInfoPanel(
             dataToSign: dataToSign,
             signature: signature,
+            isValid: isValid,
           ),
         ),
         Column(
@@ -89,7 +88,6 @@ class _SignaturePageState extends State<SignaturePage> {
                 signature = signatureGenerator.sign(dataToSign!);
                 setState(() {
                   signature = signature;
-                  isSignatureNull = false;
                 });
               },
             ),
@@ -105,18 +103,17 @@ class _SignaturePageState extends State<SignaturePage> {
               children: [
                 VerifySignatureButton(
                   onPressed: () {
-                    
                     if (signature == null) {
                       setState(() {
                         isSignatureNull = true;
                       });
                       return;
                     }
-                    isVerified = signatureVerifier.verify(
+                    isValid = signatureVerifier.verify(
                       dataToSign!,
                     );
                     setState(() {
-                      isVerified = isVerified;
+                      isValid = isValid;
                     });
                   },
                 ),

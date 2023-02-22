@@ -1,10 +1,12 @@
-import 'package:encrypthat/services/encryption/key_pair_generator.dart';
+import 'package:encrypthat/services/encryption/widgets/buttons/generate_keys_button.dart';
+import 'package:encrypthat/services/encryption/widgets/buttons/key_length_dropdown.dart';
+import 'package:encrypthat/services/encryption/widgets/functions/key_pair_generator.dart';
+import 'package:encrypthat/services/encryption/widgets/panels/keys_info_panel.dart';
 import 'package:flutter/material.dart';
 import 'package:encrypthat/constants/constants.dart' as constants;
 import 'package:pointycastle/asymmetric/api.dart' as pc;
-import '../services/encryption/widgets/key_length_dropdown.dart';
-import '../services/encryption/widgets/generate_keys_button.dart';
-import '../services/encryption/widgets/keys_info_panel.dart';
+
+
 
 class KeysPage extends StatefulWidget {
   const KeysPage({super.key});

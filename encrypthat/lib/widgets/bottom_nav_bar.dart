@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:encrypthat/constants/constants.dart' as constants;
-
-import '../icons.dart';
+import 'package:encrypthat/utils/icons.dart';
 
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({super.key, required this.onPressed});
