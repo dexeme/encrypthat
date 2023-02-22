@@ -1,4 +1,4 @@
-import 'package:encrypthat/widgets/main_view.dart';
+import 'package:encrypthat/views/main_view.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -11,6 +11,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Encrypthat',
       theme: ThemeData(
         primarySwatch: Colors.blue,
