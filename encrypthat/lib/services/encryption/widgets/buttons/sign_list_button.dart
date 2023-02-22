@@ -1,8 +1,5 @@
-// ignore_for_file: library_private_types_in_public_api
-
-import 'dart:async';
 import 'package:encrypthat/constants/constants.dart' as constants;
-import 'package:encrypthat/services/encryption/key_pair_generator.dart';
+import 'package:encrypthat/services/encryption/widgets/functions/key_pair_generator.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
@@ -59,7 +56,7 @@ class _SignListButtonState extends State<SignListButton> {
         ),
         child: _isButtonAvailable!
             ? const Text('ASSINAR LISTA', style: constants.startScanButtonStyle)
-            : const Text('DADOS FALTANDO!',
+            : const Text('ASSINAR LISTA',
                 style: constants.startScanButtonStyle),
       ),
     );
