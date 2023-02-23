@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:encrypthat/utils/icons.dart';
-
 const appBarColor = Color.fromRGBO(52, 52, 52, 1);
 const bottomNavBarColor = Color.fromRGBO(32, 32, 32, 1);
 const backgroundColor = Color.fromRGBO(255, 255, 255, 1);
@@ -88,8 +86,6 @@ const signatureStyle = TextStyle(
     fontSize: 15,
     fontWeight: FontWeight.w800,
     color: Colors.black);
-
-const bluetoothIcon = CustomIcons.bluetooth;
 
 const regularFont = TextStyle(
     fontFamily: 'JetBrainsMono', fontSize: 16, fontWeight: FontWeight.normal);
