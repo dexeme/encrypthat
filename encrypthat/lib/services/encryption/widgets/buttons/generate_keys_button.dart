@@ -1,5 +1,5 @@
 import 'package:encrypthat/constants/constants.dart' as constants;
-import 'package:encrypthat/services/encryption/widgets/functions/key_pair_generator.dart';
+import 'package:encrypthat/services/encryption/functions/key_pair_generator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

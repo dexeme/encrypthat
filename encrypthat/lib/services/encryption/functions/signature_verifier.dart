@@ -1,12 +1,12 @@
 import 'dart:convert';
 import 'dart:typed_data';
-import 'package:encrypthat/services/encryption/widgets/functions/signature_generator.dart';
+import 'package:encrypthat/services/encryption/functions/signature_generator.dart';
 import 'package:encrypthat/utils/storage_manager.dart';
 import 'package:pointycastle/api.dart';
 import 'package:pointycastle/asymmetric/api.dart';
 import 'package:pointycastle/digests/sha256.dart';
 import 'package:pointycastle/signers/rsa_signer.dart';
-import 'package:encrypthat/services/encryption/widgets/functions/key_pair_generator.dart';
+import 'package:encrypthat/services/encryption/functions/key_pair_generator.dart';
 
 class SignatureVerifier {
   SignatureVerifier._privateConstructor();

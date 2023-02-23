@@ -1,4 +1,4 @@
-import 'package:encrypthat/services/bluetooth/widgets/functions/ble_devices_scanner.dart';
+import 'package:encrypthat/services/bluetooth/functions/ble_devices_scanner.dart';
 import 'package:encrypthat/services/bluetooth/widgets/panels/devices_panel.dart';
 import 'package:encrypthat/utils/storage_manager.dart';
 import 'package:flutter/material.dart';

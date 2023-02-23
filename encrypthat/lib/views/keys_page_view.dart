@@ -1,6 +1,6 @@
 import 'package:encrypthat/services/encryption/widgets/buttons/generate_keys_button.dart';
 import 'package:encrypthat/services/encryption/widgets/buttons/key_length_dropdown.dart';
-import 'package:encrypthat/services/encryption/widgets/functions/key_pair_generator.dart';
+import 'package:encrypthat/services/encryption/functions/key_pair_generator.dart';
 import 'package:encrypthat/services/encryption/widgets/panels/keys_info_panel.dart';
 import 'package:flutter/material.dart';
 import 'package:encrypthat/constants/constants.dart' as constants;

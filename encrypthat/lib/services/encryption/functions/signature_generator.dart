@@ -4,7 +4,7 @@ import 'package:pointycastle/asymmetric/api.dart';
 import 'package:pointycastle/digests/sha256.dart';
 import 'package:pointycastle/signers/rsa_signer.dart';
 import 'package:encrypthat/utils/storage_manager.dart';
-import 'package:encrypthat/services/encryption/widgets/functions/key_pair_generator.dart';
+import 'package:encrypthat/services/encryption/functions/key_pair_generator.dart';
 
 class SignatureGenerator {
   SignatureGenerator._privateConstructor();

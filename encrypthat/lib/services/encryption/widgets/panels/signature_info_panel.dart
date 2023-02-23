@@ -1,11 +1,11 @@
 import 'dart:convert';
-import 'package:encrypthat/services/bluetooth/widgets/functions/ble_devices_scanner.dart';
+import 'package:encrypthat/services/bluetooth/functions/ble_devices_scanner.dart';
 import 'package:flutter/material.dart';
 import 'package:encrypthat/constants/constants.dart' as constants;
 import 'package:flutter/services.dart';
-import 'package:encrypthat/services/encryption/widgets/functions/key_pair_generator.dart';
-import 'package:encrypthat/services/encryption/widgets/functions/signature_generator.dart';
-import 'package:encrypthat/services/encryption/widgets/functions/signature_verifier.dart';
+import 'package:encrypthat/services/encryption/functions/key_pair_generator.dart';
+import 'package:encrypthat/services/encryption/functions/signature_generator.dart';
+import 'package:encrypthat/services/encryption/functions/signature_verifier.dart';
 
 class SignatureInfoPanel extends StatelessWidget {
   final Uint8List? signature;
