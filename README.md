@@ -1,6 +1,6 @@
 # EncryptHat
 
-EncryptHat is a mobile application developed in Flutter. It was designed as a final challenge for admission to the Security in Computing Laboratory at UFSC. The application is capable of scanning Bluetooth devices and storing them in a list. It also allows the user to generate a custom-sized key pair, and then sign the list of devices using the private key. Finally, it verifies the signature's validity using the public key.
+EncryptHat is a mobile application developed in Flutter. The application is capable of scanning Bluetooth devices and storing them in a list. It also allows the user to generate a custom-sized key pair, and then sign the list of devices using the private key. Finally, it verifies the signature's validity using the public key.
 
 ## How to Use
 
@@ -14,10 +14,6 @@ EncryptHat is a mobile application developed in Flutter. It was designed as a fi
 
 - Flutter 2.2.3 or higher
 - Dart 2.13.4 or higher
-
-## Credits
-
-This project was developed by dexeme as a final challenge for admission to the Security in Computing Laboratory at UFSC.
 
 ## License
 
